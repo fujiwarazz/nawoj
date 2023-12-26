@@ -1,0 +1,90 @@
+<template>
+  <div>
+    <a-row id="globalNav"  class="grid-demo" style="margin-bottom: 5px" align="center">
+     
+      <a-col flex="auto">
+        <a-menu
+          mode="horizontal"
+          :selected-keys="selectKey"
+          @menu-item-click="doMenuClick"
+        >
+          <a-menu-item key="/home" :style="{ padding: 0, marginRight: '38px' }">
+            <div class="logo">
+              <img
+                :style="{
+                  width: '25px',
+                  height: '25px',
+                }"
+                src="https://xujcoj.com/favicon.ico"
+              />
+              <div class="logo_name"><router-link to="/home">NawOj</router-link></div>
+            </div>
+          </a-menu-item>
+          <a-menu-item v-for="item in routes" :key="item.path">
+            <div v-if="item.path != '/home' && item.path!='/404'" >{{ item.name }}</div>
+          </a-menu-item>
+        </a-menu>
+      </a-col>
+      <a-col flex="155px">
+        <div class="user">{{store.state.user?.loginUser?.userName??'未登录'}}</div>
+      </a-col>
+    </a-row>
+  </div>
+</template>
+<script setup lang="ts">
+import { useRoute, useRouter } from "vue-router";
+import { routes } from "../router/routes";
+import { ref } from "vue";
+import { useStore } from "vuex";
+
+
+// import nprogress from "nprogress";
+// import "nprogress/nprogress.css";
+
+const store = useStore()
+const router = useRouter();
+const route = useRoute();
+const selectKey = ref([route.path]);
+
+
+
+
+
+router.afterEach((to, from, failure) => {
+  selectKey.value = [to.path];
+});
+
+const doMenuClick = (key: string) => {
+  router.push({
+    path: key,
+  });
+};
+//dispatch调用actions
+setTimeout(() => {
+  console.log(store.state.user.loginUser.userName)
+  store.dispatch("user/getLoginUser",{
+    userName:'peelsannaw',
+    access:1
+
+  })
+}, 1000);
+
+</script>
+
+<style scoped>
+#globalNav {
+}
+.logo {
+  padding-left: 10px;
+  display: inline-flex;
+}
+.logo > .logo_name {
+  align-items: center;
+  margin-left: 10px;
+  font-size: 25px;
+  color: #333333;
+}
+.user{
+  font-size: 16px;
+}
+</style>
