@@ -3,8 +3,6 @@ import HomeView from "../views/HomeView.vue";
 import AboutViewVue from "@/views/AboutView.vue";
 import notFound from "@/views/NotFoundView.vue"
 
-
-
 /*
     0：游客
     1：普通用户
@@ -16,7 +14,8 @@ export const routes: Array<RouteRecordRaw> = [
         name: "主页",
         component: HomeView,
         meta: {
-            access: 0
+            access: 0,
+            hide:true
         },
 
     },
@@ -26,7 +25,7 @@ export const routes: Array<RouteRecordRaw> = [
         name: "问题",
         component: AboutViewVue,
         meta: {
-            access: 0
+            access: 0 as number
         },
     },
     {
@@ -34,7 +33,7 @@ export const routes: Array<RouteRecordRaw> = [
         name: "状态",
         component: AboutViewVue,
         meta: {
-            access: 0
+            access: 0 as number
         },
     },
     {
@@ -42,7 +41,7 @@ export const routes: Array<RouteRecordRaw> = [
         name: "排名",
         component: AboutViewVue,
         meta: {
-            access: 0
+            access: 0 as number
         },
     },
     {
@@ -50,7 +49,15 @@ export const routes: Array<RouteRecordRaw> = [
         name: "公告",
         component: AboutViewVue,
         meta: {
-            access: 1
+            access: 1 as number
+        },
+    },  
+    {
+        path: "/statistics",
+        name: "统计",
+        component: AboutViewVue,
+        meta: {
+            access: 2 as number
         },
     },  
     {
@@ -58,7 +65,8 @@ export const routes: Array<RouteRecordRaw> = [
         name: 'not found',
         component: notFound,
         meta: {
-            access: 0
+            access: 0 as number,
+            hide:true
         },
     },
     {

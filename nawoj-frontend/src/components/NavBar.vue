@@ -1,7 +1,12 @@
 <template>
   <div>
-    <a-row id="globalNav"  class="grid-demo" style="margin-bottom: 5px" align="center">
-     
+    <a-row
+      id="globalNav"
+      class="grid-demo"
+      style="margin-bottom: 5px"
+      align="center"
+      :wrap="false"
+    >
       <a-col flex="auto">
         <a-menu
           mode="horizontal"
@@ -20,13 +25,14 @@
               <div class="logo_name"><router-link to="/home">NawOj</router-link></div>
             </div>
           </a-menu-item>
-          <a-menu-item v-for="item in routes" :key="item.path">
-            <div v-if="item.path != '/home' && item.path!='/404'" >{{ item.name }}</div>
+
+          <a-menu-item v-for="item in visableRoutes" :key="item.path">
+            {{ item.name }}
           </a-menu-item>
         </a-menu>
       </a-col>
       <a-col flex="155px">
-        <div class="user">{{store.state.user?.loginUser?.userName??'未登录'}}</div>
+        <div class="user">{{ store.state.user?.loginUser?.userName ?? "未登录" }}</div>
       </a-col>
     </a-row>
   </div>
@@ -34,21 +40,30 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
 import { routes } from "../router/routes";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
-
+import accessEnum from "@/access/accessEnum";
 
 // import nprogress from "nprogress";
 // import "nprogress/nprogress.css";
 
-const store = useStore()
+const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const selectKey = ref([route.path]);
 
 
-
-
+//computed监听组件变化
+const visableRoutes = computed(() => {
+  return routes.filter((item, index) => {
+    let role: number = item.meta?.access;
+    console.log("NOW"+role);
+    if (item.meta?.hide || store.state.user?.loginUser?.access < role) {
+      return false;
+    }
+    return true;
+  });
+});
 
 router.afterEach((to, from, failure) => {
   selectKey.value = [to.path];
@@ -59,16 +74,15 @@ const doMenuClick = (key: string) => {
     path: key,
   });
 };
-//dispatch调用actions
+
+// dispatch调用actions
 setTimeout(() => {
-  console.log(store.state.user.loginUser.userName)
-  store.dispatch("user/getLoginUser",{
-    userName:'peelsannaw',
-    access:1
-
-  })
+  console.log(store.state.user.loginUser.userName);
+  store.dispatch("user/getLoginUser", {
+    userName: "peelsannaw",
+    access:accessEnum.ACCESS_ENUM.NORMAL_USER,
+  });
 }, 1000);
-
 </script>
 
 <style scoped>
@@ -84,7 +98,7 @@ setTimeout(() => {
   font-size: 25px;
   color: #333333;
 }
-.user{
+.user {
   font-size: 16px;
 }
 </style>

@@ -1,3 +1,4 @@
+import accessEnum from "@/access/accessEnum"
 import { StoreOptions } from "vuex"
 
 
@@ -6,7 +7,7 @@ export default {
     state: () => ({
         loginUser: {
             userName: '未登录',
-            access:0,
+            access:accessEnum.ACCESS_ENUM.NOT_LOGIN,
 
         },
     }),
