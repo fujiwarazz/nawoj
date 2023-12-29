@@ -7,8 +7,7 @@
 import BasicLayout from "@/layouts/BasicLayout.vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { Modal } from "@arco-design/web-vue";
-
+// import { onBeforeMount } from "vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -21,11 +20,8 @@ const store = useStore();
 
 // }
 
-// onMounted(() => {
-//     initFunc()
-// })
-
-
-
+// onBeforeMount(() => {
+ 
+// });
 </script>
 <style></style>

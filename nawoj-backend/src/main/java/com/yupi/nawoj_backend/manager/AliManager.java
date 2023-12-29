@@ -23,7 +23,7 @@ public class AliManager {
     private static final String accessKeySecret = AliyunConfig.KEY_SECRET;
     private static final String bucketName = AliyunConfig.BUCKET_NAME;
 
-    public static String uploadImg(MultipartFile file){
+    public String uploadImg(MultipartFile file){
         try {
             // 创建OSS实例。
             OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);

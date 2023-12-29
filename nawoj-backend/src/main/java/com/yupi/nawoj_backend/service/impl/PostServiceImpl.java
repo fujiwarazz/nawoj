@@ -3,7 +3,7 @@ package com.yupi.nawoj_backend.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import com.yupi.nawoj_backend.constant.CommonConstant;
 import com.yupi.nawoj_backend.exception.BusinessException;
 import com.yupi.nawoj_backend.exception.ThrowUtils;

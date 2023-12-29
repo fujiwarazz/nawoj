@@ -1,5 +1,7 @@
 package com.yupi.nawoj_backend.common;
 
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
+
 /**
  * 返回工具类
  *

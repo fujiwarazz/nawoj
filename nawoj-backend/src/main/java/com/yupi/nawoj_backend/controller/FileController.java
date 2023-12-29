@@ -2,10 +2,11 @@ package com.yupi.nawoj_backend.controller;
 
 import cn.hutool.core.io.FileUtil;
 import com.yupi.nawoj_backend.common.BaseResponse;
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import com.yupi.nawoj_backend.common.ResultUtils;
 import com.yupi.nawoj_backend.constant.FileConstant;
 import com.yupi.nawoj_backend.exception.BusinessException;
+import com.yupi.nawoj_backend.manager.AliManager;
 import com.yupi.nawoj_backend.manager.CosManager;
 import com.yupi.nawoj_backend.model.dto.file.UploadFileRequest;
 import com.yupi.nawoj_backend.model.entity.User;
@@ -16,15 +17,6 @@ import java.util.Arrays;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import com.yupi.nawoj_backend.common.BaseResponse;
-import com.yupi.nawoj_backend.common.ErrorCode;
-import com.yupi.nawoj_backend.common.ResultUtils;
-import com.yupi.nawoj_backend.constant.FileConstant;
-import com.yupi.nawoj_backend.exception.BusinessException;
-import com.yupi.nawoj_backend.model.dto.file.UploadFileRequest;
-import com.yupi.nawoj_backend.model.entity.User;
-import com.yupi.nawoj_backend.model.enums.FileUploadBizEnum;
-import com.yupi.nawoj_backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +41,22 @@ public class FileController {
 
     @Resource
     private CosManager cosManager;
+
+    @Resource
+    private AliManager aliManager;
+
+
+    @PostMapping("/uploadAvatar")
+    public BaseResponse<String> uploadAvatar(@RequestPart("file") MultipartFile multipartFile){
+        try {
+            validFile(multipartFile, FileUploadBizEnum.USER_AVATAR);
+            String path = aliManager.uploadImg(multipartFile);
+            System.out.println(path);
+            return ResultUtils.success(path);
+        } catch (Exception e) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,e.getMessage());
+        }
+    }
 
     /**
      * 文件上传

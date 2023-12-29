@@ -1,7 +1,7 @@
 package com.yupi.nawoj_backend.controller;
 
 import com.yupi.nawoj_backend.common.BaseResponse;
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import com.yupi.nawoj_backend.common.ResultUtils;
 import com.yupi.nawoj_backend.exception.BusinessException;
 import com.yupi.nawoj_backend.model.dto.postthumb.PostThumbAddRequest;

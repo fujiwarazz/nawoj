@@ -1,7 +1,7 @@
 package com.yupi.nawoj_backend.aop;
 
 import com.yupi.nawoj_backend.annotation.AuthCheck;
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import com.yupi.nawoj_backend.exception.BusinessException;
 import com.yupi.nawoj_backend.model.entity.User;
 import com.yupi.nawoj_backend.model.enums.UserRoleEnum;

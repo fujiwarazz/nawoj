@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yupi.nawoj_backend.annotation.AuthCheck;
 import com.yupi.nawoj_backend.common.BaseResponse;
 import com.yupi.nawoj_backend.common.DeleteRequest;
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import com.yupi.nawoj_backend.common.ResultUtils;
 import com.yupi.nawoj_backend.config.WxOpenConfig;
 import com.yupi.nawoj_backend.constant.UserConstant;
@@ -75,10 +75,14 @@ public class UserController {
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
         String checkPassword = userRegisterRequest.getCheckPassword();
+        String userAvatar = userRegisterRequest.getUserAvatar();
         if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        long result = userService.userRegister(userAccount, userPassword, checkPassword);
+        if(StringUtils.isBlank(userAvatar)){
+            userAvatar = "https://cdn-mii.accounts.nintendo.com/2.0.0/mii_images/bea740be86a52acc/f78ed1356367c2f2bd6da2c0f68511c9e88ebdfb.png?type=face&width=140&bgColor=DFDFDFFF";
+        }
+        long result = userService.userRegister(userAccount, userPassword, checkPassword,userAvatar);
         return ResultUtils.success(result);
     }
 
@@ -99,6 +103,7 @@ public class UserController {
         if (StringUtils.isAnyBlank(userAccount, userPassword)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+
         LoginUserVO loginUserVO = userService.userLogin(userAccount, userPassword, request);
         return ResultUtils.success(loginUserVO);
     }

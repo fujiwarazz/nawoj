@@ -10,7 +10,7 @@ export default {
         loginUser: {
             userName: '未登录',
             access:accessEnum.ACCESS_ENUM.NOT_LOGIN,
-            userAvatar:'',
+            userAvatar:'https://cdn-mii.accounts.nintendo.com/2.0.0/mii_images/bea740be86a52acc/f78ed1356367c2f2bd6da2c0f68511c9e88ebdfb.png?type=face&width=140&bgColor=DFDFDFFF',
             userProfile:'',
             id:-1
         },
@@ -24,14 +24,13 @@ export default {
             const res = await UserControllerService.getLoginUserUsingGet();
             console.log(res)
             if(res.code===0){
-                console.log(res.data)
                 commit("updateUser", res.data)
             }else{
                 commit("updateUser",{
                     ...state.loginUser,
                     access:accessEnum.ACCESS_ENUM.NOT_LOGIN
                 })
-
+                
             }
         }
     },
@@ -40,8 +39,7 @@ export default {
     mutations: {
         updateUser(state, payload) {
             state.loginUser = payload
-            console.log("now loginUser state:")
-            console.log(state.loginUser)
+          
         }
     },
 

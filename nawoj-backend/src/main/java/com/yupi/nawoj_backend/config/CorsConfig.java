@@ -1,8 +1,12 @@
 package com.yupi.nawoj_backend.config;
 
+import com.yupi.nawoj_backend.interceptor.GlobalInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.annotation.Resource;
 
 /**
  * 全局跨域配置
@@ -12,7 +16,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
+    @Resource
+    private GlobalInterceptor globalInterceptor;
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(globalInterceptor).addPathPatterns("/**");
+
+    }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 覆盖所有请求
@@ -22,7 +33,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 // 放行哪些域名（必须用 patterns，否则 * 会和 allowCredentials 冲突）
                 .allowedOriginPatterns("*")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .exposedHeaders("*");
+                .allowedHeaders("*");
+//                .exposedHeaders("*");
     }
 }
