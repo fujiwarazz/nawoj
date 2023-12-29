@@ -1,6 +1,6 @@
 package com.yupi.nawoj_backend.exception;
 
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 
 /**
  * 自定义异常类

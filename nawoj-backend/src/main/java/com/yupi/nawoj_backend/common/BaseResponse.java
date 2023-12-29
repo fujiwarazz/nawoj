@@ -1,6 +1,8 @@
 package com.yupi.nawoj_backend.common;
 
 import java.io.Serializable;
+
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import lombok.Data;
 
 /**

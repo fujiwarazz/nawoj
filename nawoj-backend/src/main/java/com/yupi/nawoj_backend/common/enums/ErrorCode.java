@@ -1,4 +1,4 @@
-package com.yupi.nawoj_backend.common;
+package com.yupi.nawoj_backend.common.enums;
 
 /**
  * 自定义错误码

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="nav">
     <a-row
       id="globalNav"
       class="grid-demo"
-      style="margin-bottom: 5px"
+      style="margin-bottom: 0px; width: 100%; background: white"
       align="center"
       :wrap="false"
     >
@@ -31,8 +31,36 @@
           </a-menu-item>
         </a-menu>
       </a-col>
-      <a-col flex="155px">
-        <div class="user">{{ store.state.user?.loginUser?.userName ?? "未登录" }}</div>
+      <a-col flex="200px">
+        <div
+          class="user"
+          v-if="store.state.user?.loginUser?.access >= accessEnum.ACCESS_ENUM.NORMAL_USER"
+        >
+          <span class="name">{{ store.state.user.loginUser.userName }}</span>
+          <a-avatar :size="40"
+            ><img alt="avatar" :src="store.state.user.loginUser?.userAvatar" />
+          </a-avatar>
+        </div>
+
+        <div class="user" v-else>
+          <a-dropdown style="font-size: 16px;  ">
+            <a-avatar class="noLogin" :style="{ backgroundColor: '#00d0b6' }"
+              >未登录</a-avatar
+            >
+            <template #content>
+              <a-doption @click="goLogin">
+                <icon-import style="font-size: 20px;"/>
+                  去登陆
+            
+              </a-doption>
+              <a-doption @click="goRegister">
+                <icon-idcard style="font-size: 20px;"/>
+                  去注册
+               
+              </a-doption>
+            </template>
+          </a-dropdown>
+        </div>
       </a-col>
     </a-row>
   </div>
@@ -43,6 +71,7 @@ import { routes } from "../router/routes";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import accessEnum from "@/access/accessEnum";
+import { IconPlus, IconDelete } from "@arco-design/web-vue/es/icon";
 
 // import nprogress from "nprogress";
 // import "nprogress/nprogress.css";
@@ -52,19 +81,20 @@ const router = useRouter();
 const route = useRoute();
 const selectKey = ref([route.path]);
 
-
 //computed监听组件变化
 const visableRoutes = computed(() => {
   return routes.filter((item) => {
-    let role:number = item.meta?.access as number;
-    console.log(store.state.user?.loginUser?.access)
+    let role: number = item.meta?.access as number;
+    console.log(store.state.user?.loginUser?.access);
     if (item.meta?.hide || store.state.user?.loginUser?.access < role) {
       return false;
     }
     return true;
   });
 });
-
+const goLogin = () => {
+  router.push("/user/login");
+};
 router.afterEach((to) => {
   selectKey.value = [to.path];
 });
@@ -74,19 +104,25 @@ const doMenuClick = (key: string) => {
     path: key,
   });
 };
-
-//dispatch调用actions
-setTimeout(() => {
-  console.log(store.state.user.loginUser.userName);
-  store.dispatch("user/getLoginUser", {
-    userName: "peelsannaw",
-    access:accessEnum.ACCESS_ENUM.NORMAL_USER,
-  });
-}, 1000);
+const goRegister = () => {
+  router.push("/user/register");
+};
+// dispatch调用actions
+// setTimeout(() => {
+//   console.log(store.state.user.loginUser.userName);
+// store.dispatch("user/getLoginUser", {
+//   userName: "peelsannaw",
+//   access: accessEnum.ACCESS_ENUM.NORMAL_USER,
+// });
+// }, 1000);
 </script>
 
 <style scoped>
 #globalNav {
+  width: 100vw;
+}
+.nav {
+  border-bottom: lightgray 1px solid;
 }
 .logo {
   padding-left: 10px;
@@ -100,5 +136,14 @@ setTimeout(() => {
 }
 .user {
   font-size: 16px;
+  padding: 10px;
+  display: inline;
+}
+.name {
+  margin-right: 10px;
+  color: rgb(60, 60, 60);
+}
+.noLogin {
+  margin-left: 100px;
 }
 </style>

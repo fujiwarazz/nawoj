@@ -1,7 +1,7 @@
 package com.yupi.nawoj_backend.exception;
 
 import com.yupi.nawoj_backend.common.BaseResponse;
-import com.yupi.nawoj_backend.common.ErrorCode;
+import com.yupi.nawoj_backend.common.enums.ErrorCode;
 import com.yupi.nawoj_backend.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

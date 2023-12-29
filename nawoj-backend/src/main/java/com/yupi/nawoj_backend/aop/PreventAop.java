@@ -34,7 +34,7 @@ public class PreventAop {
     StringRedisTemplate stringRedisTemplate;
 
     @Pointcut("@annotation(com.yupi.nawoj_backend.annotation.Prevent)")
-    public void pt() {
+    public void pt() {  
 
     }
 
