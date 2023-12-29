@@ -3,6 +3,9 @@ package com.yupi.nawoj_backend.model.enums;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+import io.swagger.models.auth.In;
 import org.apache.commons.lang3.ObjectUtils;
 
 /**
@@ -13,17 +16,21 @@ import org.apache.commons.lang3.ObjectUtils;
  */
 public enum UserRoleEnum {
 
-    USER("用户", "user"),
-    ADMIN("管理员", "admin"),
-    BAN("被封号", "ban");
+    GUEST("游客", "guest", 0),
+    USER("用户", "user", 1),
+    ADMIN("管理员", "admin", 2),
+    BAN("被封号", "ban", -1);
 
     private final String text;
 
     private final String value;
 
-    UserRoleEnum(String text, String value) {
+    private final Integer code;
+
+    UserRoleEnum(String text, String value, Integer code) {
         this.text = text;
         this.value = value;
+        this.code = code;
     }
 
     /**
@@ -33,6 +40,25 @@ public enum UserRoleEnum {
      */
     public static List<String> getValues() {
         return Arrays.stream(values()).map(item -> item.value).collect(Collectors.toList());
+    }
+    @SuppressWarnings("all")
+    public static String getValueByUserRoleEnumCode(UserRoleEnum userRoleEnum){
+        switch (userRoleEnum.code){
+            case -1: return BAN.getValue();
+            case 0: return GUEST.getValue();
+            case 1: return USER.getValue();
+            case 2: return ADMIN.getValue();
+            default: return GUEST.getValue();
+        }
+
+    }
+    public static Integer getUserRoleCodeByValue(String value){
+        switch (value){
+            case "user": return USER.code;
+            case "admin": return ADMIN.code;
+            case "ban": return BAN.code;
+            default: return GUEST.code;
+        }
     }
 
     /**
@@ -60,4 +86,9 @@ public enum UserRoleEnum {
     public String getText() {
         return text;
     }
+
+    public Integer getCode() {
+        return code;
+    }
+
 }

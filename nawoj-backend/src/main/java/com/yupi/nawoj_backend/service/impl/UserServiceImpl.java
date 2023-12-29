@@ -224,6 +224,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         LoginUserVO loginUserVO = new LoginUserVO();
         BeanUtils.copyProperties(user, loginUserVO);
+        loginUserVO.setAccess(UserRoleEnum.getUserRoleCodeByValue(user.getUserRole()));
         return loginUserVO;
     }
 

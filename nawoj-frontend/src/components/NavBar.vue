@@ -55,9 +55,9 @@ const selectKey = ref([route.path]);
 
 //computed监听组件变化
 const visableRoutes = computed(() => {
-  return routes.filter((item, index) => {
-    let role: number = item.meta?.access;
-    console.log("NOW"+role);
+  return routes.filter((item) => {
+    let role:number = item.meta?.access as number;
+    console.log(store.state.user?.loginUser?.access)
     if (item.meta?.hide || store.state.user?.loginUser?.access < role) {
       return false;
     }
@@ -65,7 +65,7 @@ const visableRoutes = computed(() => {
   });
 });
 
-router.afterEach((to, from, failure) => {
+router.afterEach((to) => {
   selectKey.value = [to.path];
 });
 
@@ -75,7 +75,7 @@ const doMenuClick = (key: string) => {
   });
 };
 
-// dispatch调用actions
+//dispatch调用actions
 setTimeout(() => {
   console.log(store.state.user.loginUser.userName);
   store.dispatch("user/getLoginUser", {

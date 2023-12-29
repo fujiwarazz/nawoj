@@ -1,10 +1,10 @@
 <template>
   <div id="basicLayout">
-    <a-layout style="height: 400px">
+    <a-layout>
       <a-layout-header class="header">
         <NavBar/>
-
       </a-layout-header>
+
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
@@ -27,12 +27,13 @@ import NavBar from'../components/NavBar'
 .header {
   
 }
-.content {
-  background:linear-gradient(to right, #939393,#838228);
+#basicLayout .content {
+  background:linear-gradient(to right, #939393,#1111);
+  height: 100vw;
 }
 .footer {
-  background: #efefef;
-  padding: 16px;
+  background: #eeefef;
+  padding: 12px;
   position: absolute;
   bottom: 0px;
   left:0px;

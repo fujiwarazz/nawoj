@@ -17,27 +17,15 @@ const store = useStore();
 /**
  * 全局初始化
  */
-const initFunc() =>{
+// const initFunc() =>{
 
-}
+// }
 
-onMounted(() => {
-    initFunc()
-})
+// onMounted(() => {
+//     initFunc()
+// })
 
 
-router.beforeEach((to, from, next) => {
-  console.log(to.meta.access);
-  if (store.state.user?.loginUser?.access >= to.meta.access) {
-    next();
-  } else {
-    Modal.error({
-      title: "Error Notification",
-      content: "您的权限不足:(",
-    });
-    router.push("/home");
-  }
-});
+
 </script>
 <style></style>
-QWWW QWEASDWASZXXXSWSXDW 
