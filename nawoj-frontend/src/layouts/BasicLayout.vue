@@ -12,7 +12,9 @@
 
 
       <a-layout-footer class="footer">
-        <a href="https://github.com/fujiwarazz?tab=repositories" target="_blank" rel="noopener noreferrer">Power By Peelsannaw</a>
+        <a href="https://github.com/fujiwarazz?tab=repositories" target="_blank" rel="noopener noreferrer">
+          <icon-github style="font-size: 20px;"/>
+        Power By Peelsannaw</a>
       </a-layout-footer>
     </a-layout>
   </div>

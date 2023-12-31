@@ -10,7 +10,9 @@ import com.yupi.nawoj_backend.model.entity.PostThumb;
 import com.yupi.nawoj_backend.model.entity.User;
 import com.yupi.nawoj_backend.service.PostService;
 import com.yupi.nawoj_backend.service.PostThumbService;
+
 import javax.annotation.Resource;
+
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

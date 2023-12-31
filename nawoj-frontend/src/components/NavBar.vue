@@ -37,9 +37,27 @@
           v-if="store.state.user?.loginUser?.access >= accessEnum.ACCESS_ENUM.NORMAL_USER"
         >
           <span class="name">{{ store.state.user.loginUser.userName }}</span>
-          <a-avatar :size="40"
-            ><img alt="avatar" :src="store.state.user.loginUser?.userAvatar" />
+          <!-- <a-avatar :size="40"
+            ><img alt="avatar"  :src="store.state.user.loginUser?.userAvatar" />
+          </a-avatar> -->
+          <a-dropdown style="font-size: 16px;  ">
+            <a-avatar :size="40"
+            ><img alt="avatar"  :src="store.state.user.loginUser?.userAvatar" />
           </a-avatar>
+            <template #content>
+              
+              <a-doption @click="goUserCenter">
+                <icon-idcard style="font-size: 20px;"/>
+                  用户中心
+               
+              </a-doption>
+              <a-doption @click="logout">
+                 <icon-export style="font-size: 20px;" />
+                退出登录
+              </a-doption>
+            </template>
+          </a-dropdown>
+
         </div>
 
         <div class="user" v-else>
@@ -71,10 +89,9 @@ import { routes } from "../router/routes";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import accessEnum from "@/access/accessEnum";
-import { IconPlus, IconDelete } from "@arco-design/web-vue/es/icon";
-
-// import nprogress from "nprogress";
-// import "nprogress/nprogress.css";
+import nprogress from "nprogress";
+import "nprogress/nprogress.css";
+import { UserControllerService } from "@/generated";
 
 const store = useStore();
 const router = useRouter();
@@ -92,11 +109,19 @@ const visableRoutes = computed(() => {
     return true;
   });
 });
+const logout = async()=>{
+  const res = await UserControllerService.userLogoutUsingPost()
+  if(res.code === 0){
+    router.push('/user/login')
+  }
+}
 const goLogin = () => {
   router.push("/user/login");
 };
 router.afterEach((to) => {
   selectKey.value = [to.path];
+  nprogress.done()
+
 });
 
 const doMenuClick = (key: string) => {

@@ -1,7 +1,7 @@
 package com.yupi.nawoj_backend.model.dto.user;
 
 import com.yupi.nawoj_backend.common.PageRequest;
-import java.io.Serializable;
+ import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

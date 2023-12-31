@@ -2,6 +2,7 @@ package com.yupi.nawoj_backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yupi.nawoj_backend.model.entity.Post;
+
 import java.util.Date;
 import java.util.List;
 

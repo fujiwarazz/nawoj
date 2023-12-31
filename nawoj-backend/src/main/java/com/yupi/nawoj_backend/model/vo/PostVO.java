@@ -1,10 +1,12 @@
 package com.yupi.nawoj_backend.model.vo;
 
-import cn.hutool.json.JSONUtil;
-import com.yupi.nawoj_backend.model.entity.Post;
-import java.io.Serializable;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import com.yupi.nawoj_backend.model.entity.Post;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -16,6 +18,8 @@ import org.springframework.beans.BeanUtils;
  */
 @Data
 public class PostVO implements Serializable {
+
+    private final static Gson GSON = new Gson();
 
     /**
      * id
@@ -90,7 +94,9 @@ public class PostVO implements Serializable {
         Post post = new Post();
         BeanUtils.copyProperties(postVO, post);
         List<String> tagList = postVO.getTagList();
-        post.setTags(JSONUtil.toJsonStr(tagList));
+        if (tagList != null) {
+            post.setTags(GSON.toJson(tagList));
+        }
         return post;
     }
 
@@ -106,7 +112,8 @@ public class PostVO implements Serializable {
         }
         PostVO postVO = new PostVO();
         BeanUtils.copyProperties(post, postVO);
-        postVO.setTagList(JSONUtil.toList(post.getTags(), String.class));
+        postVO.setTagList(GSON.fromJson(post.getTags(), new TypeToken<List<String>>() {
+        }.getType()));
         return postVO;
     }
 }

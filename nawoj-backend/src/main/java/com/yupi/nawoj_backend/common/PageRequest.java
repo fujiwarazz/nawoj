@@ -1,7 +1,7 @@
 package com.yupi.nawoj_backend.common;
 
-import com.yupi.nawoj_backend.constant.CommonConstant;
-import lombok.Data;
+ import com.yupi.nawoj_backend.constant.CommonConstant;
+ import lombok.Data;
 
 /**
  * 分页请求

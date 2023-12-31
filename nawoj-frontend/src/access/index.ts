@@ -6,8 +6,8 @@ import accessEnum from "./accessEnum";
 
 
 
-router.beforeEach(async (to, from, next) => {
 
+router.beforeEach(async (to, from, next) => {
 
     const cacheLoginUser = JSON.parse(localStorage.getItem("loginUser") || "{}");
 
@@ -21,14 +21,19 @@ router.beforeEach(async (to, from, next) => {
             userProfile: cacheLoginUser.userProfile,
             id: cacheLoginUser.id
         })
-
-
     }
+
     const loginUser = store.state.user.loginUser
 
     if (!loginUser || loginUser.access === accessEnum.ACCESS_ENUM.NOT_LOGIN) {
         await store.dispatch('user/getLoginUser')
         console.log('auto login')
+    }
+
+    if(loginUser.access>accessEnum.ACCESS_ENUM.NOT_LOGIN){
+        if(to.path=='/user/login' || to.path =='/user/register'){
+            router.push('/home')
+        }
     }
 
 

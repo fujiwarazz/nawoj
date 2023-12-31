@@ -4,7 +4,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yupi.springbootinit.mapper.UserMapper">
+<mapper namespace="com.yupi.nawoj_backend.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.yupi.nawoj_backend.model.entity.User">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="unionId" column="unionId" jdbcType="VARCHAR"/>
@@ -18,9 +18,4 @@
         <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,unionId,mpOpenId,
-        userName,userAvatar,userProfile,
-        userRole,createTime,updateTime,isDelete
-    </sql>
 </mapper>

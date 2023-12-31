@@ -1,7 +1,8 @@
 package com.yupi.nawoj_backend.mapper;
 
-import com.yupi.nawoj_backend.model.entity.PostThumb;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yupi.nawoj_backend.model.entity.PostThumb;
 
 /**
  * 帖子点赞数据库操作

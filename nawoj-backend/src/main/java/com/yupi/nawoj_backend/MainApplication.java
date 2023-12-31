@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 // todo 如需开启 Redis，须移除 exclude 中的内容
-@SpringBootApplication(exclude = {RedisAutoConfiguration.class})
+@SpringBootApplication
 @MapperScan("com.yupi.nawoj_backend.mapper")
 @EnableScheduling
 @EnableSwagger2

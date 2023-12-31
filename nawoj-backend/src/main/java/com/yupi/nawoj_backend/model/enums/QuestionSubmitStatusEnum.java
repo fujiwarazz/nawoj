@@ -1,14 +1,16 @@
-package com.yupi.nawoj_backend.common.enums;
+package com.yupi.nawoj_backend.model.enums;
 
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author peelsannaw
- * @create 31/12/2023 15:27
+ * 题目提交枚举
+ *
+ * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
+ * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 public enum QuestionSubmitStatusEnum {
 
@@ -61,5 +63,4 @@ public enum QuestionSubmitStatusEnum {
     public String getText() {
         return text;
     }
-
 }
