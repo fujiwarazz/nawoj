@@ -41,11 +41,11 @@ public class QuestionQueryRequest extends PageRequest implements Serializable {
      */
     private List<String> tags;
 
-    /**
-     * 题目答案
-     */
-    private String answer;
-
+//    /**
+//     * 题目答案
+//     */
+//    private String answer;
+    private String userName;
     /**
      * 创建用户 id
      */

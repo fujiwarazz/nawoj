@@ -1,12 +1,8 @@
 package com.yupi.nawoj_backend.model.dto.question;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,12 +42,12 @@ public class QuestionEditRequest implements Serializable {
     /**
      * 判题用例
      */
-    private List<JudgeCase> judgeCase;
+    private List<QuestionJudgeCase> judgeCase;
 
     /**
      * 判题配置
      */
-    private JudgeConfig judgeConfig;
+    private QuestionJudgeConfig judgeConfig;
 
     private static final long serialVersionUID = 1L;
 }

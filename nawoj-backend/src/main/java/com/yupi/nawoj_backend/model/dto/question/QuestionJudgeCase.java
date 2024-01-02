@@ -2,11 +2,13 @@ package com.yupi.nawoj_backend.model.dto.question;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 题目用例
  */
 @Data
-public class JudgeCase {
+public class QuestionJudgeCase {
 
     /**
      * 输入用例

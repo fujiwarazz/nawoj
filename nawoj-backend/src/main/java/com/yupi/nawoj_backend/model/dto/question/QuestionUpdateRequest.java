@@ -43,12 +43,12 @@ public class QuestionUpdateRequest implements Serializable {
     /**
      * 判题用例
      */
-    private List<JudgeCase> judgeCase;
+    private List<QuestionJudgeCase> judgeCase;
 
     /**
      * 判题配置
      */
-    private JudgeConfig judgeConfig;
+    private QuestionJudgeConfig judgeConfig;
 
     private static final long serialVersionUID = 1L;
 }

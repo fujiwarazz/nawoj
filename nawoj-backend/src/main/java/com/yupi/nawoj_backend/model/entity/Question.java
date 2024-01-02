@@ -1,10 +1,18 @@
 package com.yupi.nawoj_backend.model.entity;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import com.google.gson.reflect.TypeToken;
+import com.yupi.nawoj_backend.model.vo.PostVO;
+import com.yupi.nawoj_backend.model.vo.QuestionVO;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 /**
  * 题目
@@ -92,4 +100,6 @@ public class Question implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+
 }

@@ -6,7 +6,7 @@ import lombok.Data;
  * 题目配置
  */
 @Data
-public class JudgeConfig {
+public class QuestionJudgeConfig {
 
     /**
      * 时间限制（ms）
