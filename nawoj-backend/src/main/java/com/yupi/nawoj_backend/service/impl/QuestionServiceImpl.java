@@ -12,7 +12,6 @@ import com.yupi.nawoj_backend.exception.ThrowUtils;
 import com.yupi.nawoj_backend.mapper.QuestionMapper;
 import com.yupi.nawoj_backend.mapper.QuestionMapper;
 import com.yupi.nawoj_backend.mapper.UserMapper;
-import com.yupi.nawoj_backend.model.dto.Question.QuestionEsDTO;
 import com.yupi.nawoj_backend.model.dto.question.QuestionQueryRequest;
 import com.yupi.nawoj_backend.model.entity.*;
 import com.yupi.nawoj_backend.model.vo.QuestionVO;
@@ -47,7 +46,7 @@ import java.util.stream.Collectors;
  * @create 31/12/2023 17:35
  */
 @Service
-public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> implements QuestionService {
+public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> implements QuestionService {
 
     @Resource
     private UserService userService;
@@ -76,13 +75,13 @@ public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> 
         if (StringUtils.isNotBlank(content) && content.length() > 8192) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "内容过长");
         }
-        if (StringUtils.isNotBlank(answer) && answer.length() > 1024*1024) {
+        if (StringUtils.isNotBlank(answer) && answer.length() > 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "答案过长");
         }
-        if (StringUtils.isNotBlank(judgeCase) && judgeCase.length() > 1024*1024) {
+        if (StringUtils.isNotBlank(judgeCase) && judgeCase.length() > 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "判题程序过长");
         }
-        if (StringUtils.isNotBlank(judgeConfig) && judgeConfig.length() > 1024*1024) {
+        if (StringUtils.isNotBlank(judgeConfig) && judgeConfig.length() > 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "判题配置过长");
         }
 
@@ -92,7 +91,7 @@ public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> 
     /**
      * 获取查询包装类
      *
-     * @param QuestionQueryRequest
+     * @param questionQueryRequest
      * @return
      */
     @Override
@@ -109,8 +108,6 @@ public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> 
         String userName = questionQueryRequest.getUserName();
         String sortField = questionQueryRequest.getSortField();
         String sortOrder = questionQueryRequest.getSortOrder();
-
-
 
 
         //拼接查询
@@ -141,7 +138,7 @@ public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> 
             user = userService.getById(userId);
         }
         UserVO userVO = userService.getUserVO(user);
-        questionVO.setUserVO (userVO);
+        questionVO.setUserVO(userVO);
 
 
         return questionVO;
@@ -157,41 +154,23 @@ public class QuestionServiceImpl  extends ServiceImpl<QuestionMapper, Question> 
         }
         // 1. 关联查询用户信息
         Set<Long> userIdSet = QuestionList.stream().map(Question::getUserId).collect(Collectors.toSet());
-        Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
-                .collect(Collectors.groupingBy(User::getId));
-        // 2. 已登录，获取用户点赞、收藏状态
-        Map<Long, Boolean> QuestionIdHasThumbMap = new HashMap<>();
-        Map<Long, Boolean> QuestionIdHasFavourMap = new HashMap<>();
-        User loginUser = userService.getLoginUserPermitNull(request);
-        if (loginUser != null) {
-            Set<Long> QuestionIdSet = QuestionList.stream().map(Question::getId).collect(Collectors.toSet());
-            loginUser = userService.getLoginUser(request);
-            // 获取点赞
-            QueryWrapper<QuestionThumb> QuestionThumbQueryWrapper = new QueryWrapper<>();
-            QuestionThumbQueryWrapper.in("QuestionId", QuestionIdSet);
-            QuestionThumbQueryWrapper.eq("userId", loginUser.getId());
-            List<QuestionThumb> QuestionQuestionThumbList = QuestionThumbMapper.selectList(QuestionThumbQueryWrapper);
-            QuestionQuestionThumbList.forEach(QuestionQuestionThumb -> QuestionIdHasThumbMap.put(QuestionQuestionThumb.getQuestionId(), true));
-            // 获取收藏
-            QueryWrapper<QuestionFavour> QuestionFavourQueryWrapper = new QueryWrapper<>();
-            QuestionFavourQueryWrapper.in("QuestionId", QuestionIdSet);
-            QuestionFavourQueryWrapper.eq("userId", loginUser.getId());
-            List<QuestionFavour> QuestionFavourList = QuestionFavourMapper.selectList(QuestionFavourQueryWrapper);
-            QuestionFavourList.forEach(QuestionFavour -> QuestionIdHasFavourMap.put(QuestionFavour.getQuestionId(), true));
-        }
-        // 填充信息
-        List<QuestionVO> QuestionVOList = QuestionList.stream().map(Question -> {
-            QuestionVO questionVO = QuestionVO.objToVo(Question);
-            Long userId = Question.getUserId();
-            User user = null;
-            if (userIdUserListMap.containsKey(userId)) {
-                user = userIdUserListMap.get(userId).get(0);
-            }
-            questionVO.setUser(userService.getUserVO(user));
-            questionVO.setHasThumb(QuestionIdHasThumbMap.getOrDefault(Question.getId(), false));
-            questionVO.setHasFavour(QuestionIdHasFavourMap.getOrDefault(Question.getId(), false));
-            return questionVO;
-        }).collect(Collectors.toList());
+        Map<Long, List<User>> userIdUserListMap =
+                userService
+                        .listByIds(userIdSet)
+                        .stream()
+                        .collect(Collectors.groupingBy(User::getId));
+        List<QuestionVO> QuestionVOList = QuestionList
+                .stream()
+                .map(Question -> {
+                    QuestionVO questionVO = QuestionVO.objToVo(Question);
+                    Long userId = Question.getUserId();
+                    User user = null;
+                    if (userIdUserListMap.containsKey(userId)) {
+                        user = userIdUserListMap.get(userId).get(0);
+                    }
+                    questionVO.setUserVO(userService.getUserVO(user));
+                    return questionVO;
+                }).collect(Collectors.toList());
         QuestionVOPage.setRecords(QuestionVOList);
         return QuestionVOPage;
     }

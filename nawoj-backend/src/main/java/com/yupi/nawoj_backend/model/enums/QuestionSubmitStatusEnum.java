@@ -48,6 +48,7 @@ public enum QuestionSubmitStatusEnum {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
+
         for (QuestionSubmitStatusEnum anEnum : QuestionSubmitStatusEnum.values()) {
             if (anEnum.value.equals(value)) {
                 return anEnum;

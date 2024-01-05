@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @Author peelsannaw
  * @create 19/12/2022 下午4:27
+ * 接口防刷,默认60s一次
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

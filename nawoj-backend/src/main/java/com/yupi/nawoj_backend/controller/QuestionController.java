@@ -190,24 +190,6 @@ public class QuestionController {
         return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
     }
 
-    // endregion
-
-    /**
-     * 分页搜索（从 ES 查询，封装类）
-     *
-     * @param questionQueryRequest
-     * @param request
-     * @return
-     */
-//    @PostMapping("/search/page/vo")
-//    public BaseResponse<Page<QuestionVO>> searchQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
-//            HttpServletRequest request) {
-//        long size = questionQueryRequest.getPageSize();
-//        // 限制爬虫
-//        ThrowUtils.throwIf(size > 20, ErrorCode. );
-//        Page<Question> questionPage = questionService.searchFromEs(questionQueryRequest);
-//        return ResultUtils.success(questionService.getQuestionVOPage(questionPage, request));
-//    }
 
     /**
      * 编辑（用户）
