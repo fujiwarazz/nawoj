@@ -2,6 +2,7 @@ package com.yupi.nawoj_backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yupi.nawoj_backend.model.entity.Post;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
+@Mapper
+
 public interface PostMapper extends BaseMapper<Post> {
 
     /**

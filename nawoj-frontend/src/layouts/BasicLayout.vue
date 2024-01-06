@@ -37,11 +37,12 @@ import NavBar from'../components/NavBar'
 
 }
  .content {
+  
  } 
 .footer {
   background: #efefef;
   padding: 10px;
-  position: absolute;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;

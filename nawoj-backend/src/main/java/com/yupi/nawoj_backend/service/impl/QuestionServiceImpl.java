@@ -63,7 +63,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         String answer = question.getAnswer();
         String judgeCase = question.getJudgeCase();
         String judgeConfig = question.getJudgeConfig();
-
+        String judgeDes = question.getJudgeDescription();
         // 创建时，参数不能为空
         if (add) {
             ThrowUtils.throwIf(StringUtils.isAnyBlank(title, content, tags), ErrorCode.PARAMS_ERROR);
@@ -83,6 +83,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         }
         if (StringUtils.isNotBlank(judgeConfig) && judgeConfig.length() > 1024 * 1024) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "判题配置过长");
+        }
+        if (StringUtils.isNotBlank(judgeDes) && judgeDes.length() > 1024 * 1024) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "判题描述过长");
         }
 
 

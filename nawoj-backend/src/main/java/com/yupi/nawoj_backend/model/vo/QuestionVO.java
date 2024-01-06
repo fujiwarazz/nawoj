@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.yupi.nawoj_backend.model.dto.question.QuestionJudgeCase;
 import com.yupi.nawoj_backend.model.dto.question.QuestionJudgeConfig;
+import com.yupi.nawoj_backend.model.dto.question.QuestionJudgeDescription;
 import com.yupi.nawoj_backend.model.entity.Question;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -17,9 +18,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
-* @Author peelsannaw
-* @create 31/12/2023 17:38
-*/
+ * @Author peelsannaw
+ * @create 31/12/2023 17:38
+ */
 @Data
 public class QuestionVO implements Serializable {
     /**
@@ -59,6 +60,11 @@ public class QuestionVO implements Serializable {
     private QuestionJudgeConfig judgeConfig;
 
     /**
+     * 判题描述（json 对象）
+     */
+    private QuestionJudgeDescription judgeDescription;
+
+    /**
      * 点赞数
      */
     private Integer thumbNum;
@@ -89,18 +95,17 @@ public class QuestionVO implements Serializable {
     private UserVO userVO;
 
 
-
     public static Question voToObj(QuestionVO questionVO) {
         if (questionVO == null) {
             return null;
         }
-        Question question = BeanUtil.copyProperties(questionVO, Question.class,"tags","judgeConfig");
+        Question question = BeanUtil.copyProperties(questionVO, Question.class, "tags", "judgeConfig");
         List<String> tagList = questionVO.getTags();
         if (tagList != null) {
             question.setTags(JSON.toJSONString(tagList));
         }
         QuestionJudgeConfig judgeConfig = questionVO.getJudgeConfig();
-        if(judgeConfig!=null){
+        if (judgeConfig != null) {
             question.setJudgeConfig(JSON.toJSONString(judgeConfig));
         }
         return question;
@@ -120,11 +125,11 @@ public class QuestionVO implements Serializable {
         BeanUtils.copyProperties(question, questionVO);
         questionVO.setTags(JSON.parseArray(question.getTags(), String.class));
         questionVO.setJudgeConfig(JSON.parseObject(question.getJudgeConfig(), QuestionJudgeConfig.class));
+        questionVO.setJudgeDescription(JSON.parseObject(question.getJudgeDescription(), QuestionJudgeDescription.class));
         return questionVO;
     }
 
     private static final long serialVersionUID = 1L;
-
 
 
 }

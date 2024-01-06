@@ -45,6 +45,11 @@ public class QuestionEditRequest implements Serializable {
     private List<QuestionJudgeCase> judgeCase;
 
     /**
+     * 判题描述
+     */
+    private QuestionJudgeDescription judgeDescription;
+
+    /**
      * 判题配置
      */
     private QuestionJudgeConfig judgeConfig;

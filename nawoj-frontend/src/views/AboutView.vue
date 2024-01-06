@@ -6,7 +6,7 @@
 <style scoped>
 .about{
    background-color: red;
-   height: 90vh;
+   height: 95vh;
  
 }
 </style>  

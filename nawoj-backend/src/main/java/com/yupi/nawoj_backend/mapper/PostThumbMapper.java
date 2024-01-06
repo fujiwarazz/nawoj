@@ -3,6 +3,7 @@ package com.yupi.nawoj_backend.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yupi.nawoj_backend.model.entity.PostThumb;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 帖子点赞数据库操作
@@ -10,6 +11,8 @@ import com.yupi.nawoj_backend.model.entity.PostThumb;
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
+@Mapper
+
 public interface PostThumbMapper extends BaseMapper<PostThumb> {
 
 }

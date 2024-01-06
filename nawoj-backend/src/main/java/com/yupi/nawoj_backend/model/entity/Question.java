@@ -68,6 +68,11 @@ public class Question implements Serializable {
     private String judgeConfig;
 
     /**
+     * 判题描述 （json 对象）
+     */
+    private String judgeDescription;
+
+    /**
      * 点赞数
      */
     private Integer thumbNum;

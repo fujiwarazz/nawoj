@@ -50,5 +50,11 @@ public class QuestionUpdateRequest implements Serializable {
      */
     private QuestionJudgeConfig judgeConfig;
 
+    /**
+     * 题目描述
+     */
+    private QuestionJudgeDescription judgeDescription;
+
+
     private static final long serialVersionUID = 1L;
 }

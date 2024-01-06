@@ -11,10 +11,7 @@ import com.yupi.nawoj_backend.constant.UserConstant;
 import com.yupi.nawoj_backend.exception.BusinessException;
 import com.yupi.nawoj_backend.exception.ThrowUtils;
 
-import com.yupi.nawoj_backend.model.dto.question.QuestionAddRequest;
-import com.yupi.nawoj_backend.model.dto.question.QuestionEditRequest;
-import com.yupi.nawoj_backend.model.dto.question.QuestionQueryRequest;
-import com.yupi.nawoj_backend.model.dto.question.QuestionUpdateRequest;
+import com.yupi.nawoj_backend.model.dto.question.*;
 import com.yupi.nawoj_backend.model.entity.Question;
 import com.yupi.nawoj_backend.model.entity.User;
 
@@ -22,6 +19,7 @@ import com.yupi.nawoj_backend.model.vo.QuestionVO;
 import com.yupi.nawoj_backend.service.QuestionService;
 import com.yupi.nawoj_backend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,15 +60,30 @@ public class QuestionController {
         }
         Question question = new Question();
         BeanUtils.copyProperties(questionAddRequest, question);
+        log.info("请求参数为:[{}]",JSONUtil.toJsonStr(questionAddRequest));
         List<String> tags = questionAddRequest.getTags();
+
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+        if(questionAddRequest.getJudgeConfig()!=null){
+            question.setJudgeConfig(JSONUtil.toJsonStr(questionAddRequest.getJudgeConfig()));
+        }
+        if(questionAddRequest.getJudgeDescription()!=null){
+            question.setJudgeDescription(JSONUtil.toJsonStr(questionAddRequest.getJudgeDescription()));
+        }
+        if (questionAddRequest.getJudgeCase()!=null){
+            question.setJudgeCase(JSONUtil.toJsonStr(questionAddRequest.getJudgeCase()));
+        }
+        log.info("问题参数为:[{}]",JSONUtil.toJsonStr(question));
         questionService.validQuestion(question, true);
         User loginUser = userService.getLoginUser(request);
         question.setUserId(loginUser.getId());
         question.setFavourNum(0);
         question.setThumbNum(0);
+        question.setAcceptedNum(0);
+        question.setSubmitNum(0);
+
         boolean result = questionService.save(question);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         long newQuestionId = question.getId();
@@ -119,6 +132,10 @@ public class QuestionController {
         List<String> tags = questionUpdateRequest.getTags();
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
+        }
+        QuestionJudgeDescription judgeDescription = questionUpdateRequest.getJudgeDescription();
+        if(judgeDescription!=null){
+            question.setJudgeDescription(JSONUtil.toJsonStr(judgeDescription));
         }
         // 参数校验
         questionService.validQuestion(question, false);
@@ -206,9 +223,21 @@ public class QuestionController {
         Question question = new Question();
         BeanUtils.copyProperties(questionEditRequest, question);
         List<String> tags = questionEditRequest.getTags();
+
+        //单独类型转化 Json对象 -> String
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+        if(StringUtils.isNotBlank(question.getJudgeConfig())){
+            question.setJudgeConfig(JSONUtil.toJsonStr(question.getJudgeConfig()));
+        }
+        if(StringUtils.isNotBlank(question.getJudgeDescription())){
+            question.setJudgeDescription(JSONUtil.toJsonStr(question.getJudgeDescription()));
+        }
+        if (!StringUtils.isNotBlank(question.getJudgeCase())){
+            question.setJudgeCase(JSONUtil.toJsonStr(question.getJudgeCase()));
+        }
+
         // 参数校验
         questionService.validQuestion(question, false);
         User loginUser = userService.getLoginUser(request);
