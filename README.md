@@ -1,6 +1,6 @@
 # 项目名称 ⭐
 
-该项目是一个基于 Vue 和 Spring Cloud 的在线博弈游戏对战平台（King of Bot）系统, 玩家可以在线的通过人人、人机、机机对战游玩游戏。
+该项目是一个基于 Vue 和 Spring Cloud 的在线判题系统（Open Judge）系统
 
 ## 技术栈
 
